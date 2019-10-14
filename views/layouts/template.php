@@ -54,7 +54,7 @@ TemplateAsset::register($this);
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./agenda.html">
+            <a class="nav-link" href="<?=Url::toRoute('atendente/index')?>">
               <i class="material-icons">chrome_reader_mode</i>
               <p>Consultar agenda</p>
             </a>

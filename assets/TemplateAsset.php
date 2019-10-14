@@ -24,8 +24,9 @@ class TemplateAsset extends AssetBundle
         'https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css',
         'assets/css/material-dashboard.css?v=2.1.1',
         'assets/demo/demo.css',
-        'assets/css/site.css'
-
+        'assets/css/site.css',
+        'assets/style.css',
+        'assets/src/css/vanilla-calendar-min.css'
     ];
     public $js = [
         'assets/js/core/jquery.min.js',
@@ -46,11 +47,11 @@ class TemplateAsset extends AssetBundle
         'assets/js/plugins/nouislider.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js',
         'assets/js/plugins/arrive.min.js',
-        'https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE',
         'assets/js/plugins/chartist.min.js',
         'assets/js/plugins/bootstrap-notify.js',
         'assets/js/material-dashboard.js?v=2.1.1',
         'assets/demo/demo.js',
+        'assets/src/js/vanilla-calendar-min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
