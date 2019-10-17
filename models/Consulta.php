@@ -106,6 +106,6 @@ class Consulta extends \yii\db\ActiveRecord
         return $this->hasMany(Receita::className(), ['Consulta_idConsulta' => 'idConsulta']);
     }
     public function listaConsultasDia($data){ 
-        return $query=(new \yii\db\Query())->select(['Consulta.Hora_Consulta','Paciente.Nome', 'Medico.Especialidade','Nome_Medico'])->from('Consulta')->where("Data_Consulta = '$data'")->join('INNER JOIN','Paciente','idPaciente = Paciente_idPaciente')->join('INNER JOIN','Medico','idMedico = Medico_idMedico')->all();
+        return $query=(new \yii\db\Query())->select(['Consulta.Hora_Consulta','Paciente.Nome', 'Medico.Especialidade','Nome_Medico'])->from('Consulta')->where("Data_Consulta = '$data'")->join('INNER JOIN','Paciente','idPaciente = Paciente_idPaciente')->join('INNER JOIN','Medico','idMedico = Medico_idMedico')->orderBy(['Hora_Consulta'=>SORT_ASC])->all();
     }
 }
