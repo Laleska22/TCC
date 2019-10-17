@@ -51,7 +51,9 @@ class TemplateAsset extends AssetBundle
         'assets/js/plugins/bootstrap-notify.js',
         'assets/js/material-dashboard.js?v=2.1.1',
         'assets/demo/demo.js',
-        'assets/src/js/vanilla-calendar-min.js'
+        'assets/src/js/vanilla-calendar-min.js',
+        'assets/js/manipulacao_calendario.js'
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
