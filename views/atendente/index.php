@@ -71,10 +71,69 @@
                 selector: "#myCalendar",
                 months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
                 shortWeekday: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                onSelect: (data, elem) => {      
+                onSelect: (data, elem) => {
+                  let Mes= data.date.slice(4,7)
+                    switch(Mes){
+                      case 'Jan':
+                        Mes= "01"
+                        break;
+                      case 'Feb':
+                        Mes= "02" 
+                        break;
+                      case 'Mar':
+                        Mes= "03" 
+                        break;
+                      case 'Apr':
+                        Mes= "04"
+                        break;
+                      case 'May':
+                        Mes= "05"
+                        break;
+                      case 'Jun':
+                        Mes= "06"
+                        break;
+                      case 'Jul':
+                        Mes= "07"
+                        break;
+                      case 'Aug':
+                        Mes= "08"
+                        break;
+                      case 'Sep':
+                        Mes= "09"
+                        break;
+                      case 'Oct':
+                        Mes= "10"
+                        break;
+                      case 'Nov':
+                        Mes= "11"
+                        break;
+                      case 'Dec':
+                        Mes= "12"
+                        break;
+                    }
+                  let dia= data.date.slice(8,10)
+                  let ano =data.date.slice(11,15)
+                  let dataBusca= ano+'-'+Mes+'-'+dia
+                  console.log(dataBusca)
+                  limparTabela()
+                  $.get('index.php?r=atendente/buscar',{data :dataBusca},function(data){
+                  var data=$.parseJSON(data)
+                  data.forEach(consulta =>{
+                    $("#consultas").append(`<tr> 
+                    <td>${consulta.Hora_Consulta}</td>
+                    <td>${consulta.Nome}</td>
+                    <td>${consulta.Especialidade}</td>
+                    <td>${consulta.Nome_Medico}</td>
+                    </tr>`)
+                  })
+                  
+                })
               }
             })
            
+            function limparTabela(){
+          $('#consultas').empty();
+          }
         </script>
 
       
