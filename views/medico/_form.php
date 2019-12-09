@@ -14,17 +14,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'CRM')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Nome_Medico')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Especialidade')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Telefone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Imagem')->fileInput() ?>
 
     <?= $form->field($model, 'CPF')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'Senha')->passwordInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

@@ -18,7 +18,7 @@ class PacienteSearch extends Paciente
     {
         return [
             [['idPaciente', 'Idade', 'Historico_medico_idHistorico_medico'], 'integer'],
-            [['Nome', 'DataNascimento', 'RG', 'Cidade', 'Sexo', 'Imagem', 'CPF', 'Senha'], 'safe'],
+            [['Nome', 'DataNascimento', 'RG', 'Cidade', 'Sexo', 'CPF', 'Senha'], 'safe'],
         ];
     }
 
@@ -68,9 +68,9 @@ class PacienteSearch extends Paciente
             ->andFilterWhere(['like', 'RG', $this->RG])
             ->andFilterWhere(['like', 'Cidade', $this->Cidade])
             ->andFilterWhere(['like', 'Sexo', $this->Sexo])
-            ->andFilterWhere(['like', 'Imagem', $this->Imagem])
-            ->andFilterWhere(['like', 'CPF', $this->CPF])
-            ->andFilterWhere(['like', 'Senha', $this->Senha]);
+            // ->andFilterWhere(['like', 'Imagem', $this->Imagem])
+            ->andFilterWhere(['like', 'CPF', $this->CPF]);
+            // ->andFilterWhere(['like', 'Senha', $this->Senha]);
 
         return $dataProvider;
     }

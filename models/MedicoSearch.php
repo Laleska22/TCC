@@ -18,7 +18,7 @@ class MedicoSearch extends Medico
     {
         return [
             [['idMedico'], 'integer'],
-            [['CRM', 'Nome', 'Especialidade', 'Telefone', 'Imagem', 'CPF', 'Senha'], 'safe'],
+            [['CRM', 'Nome_Medico', 'Especialidade', 'Telefone', 'CPF', 'Senha'], 'safe'],
         ];
     }
 
@@ -62,12 +62,11 @@ class MedicoSearch extends Medico
         ]);
 
         $query->andFilterWhere(['like', 'CRM', $this->CRM])
-            ->andFilterWhere(['like', 'Nome', $this->Nome])
+            ->andFilterWhere(['like', 'Nome_Medico', $this->Nome_Medico])
             ->andFilterWhere(['like', 'Especialidade', $this->Especialidade])
             ->andFilterWhere(['like', 'Telefone', $this->Telefone])
-            ->andFilterWhere(['like', 'Imagem', $this->Imagem])
-            ->andFilterWhere(['like', 'CPF', $this->CPF])
-            ->andFilterWhere(['like', 'Senha', $this->Senha]);
+            ->andFilterWhere(['like', 'CPF', $this->CPF]);
+            // ->andFilterWhere(['like', 'Senha', $this->Senha]);
 
         return $dataProvider;
     }

@@ -14,13 +14,13 @@ use Yii;
  * @property string $Cidade
  * @property int $Idade
  * @property string $Sexo
- * @property resource $Imagem
  * @property string $CPF
- * @property string $Senha
  * @property int $Historico_medico_idHistorico_medico
+ * @property int $Usuario_idUsuario
  *
  * @property Consulta[] $consultas
  * @property HistoricoMedico $historicoMedicoIdHistoricoMedico
+ * @property Usuario $usuarioIdUsuario
  */
 class Paciente extends \yii\db\ActiveRecord
 {
@@ -38,12 +38,13 @@ class Paciente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Nome', 'DataNascimento', 'RG', 'Cidade', 'Idade', 'Sexo', 'CPF', 'Senha', 'Historico_medico_idHistorico_medico'], 'required'],
+            [['Nome', 'DataNascimento', 'RG', 'Cidade', 'Idade', 'Sexo', 'CPF', 'Historico_medico_idHistorico_medico', 'Usuario_idUsuario'], 'required'],
             [['DataNascimento'], 'safe'],
-            [['Idade', 'Historico_medico_idHistorico_medico'], 'integer'],
-            [['Sexo', 'Imagem'], 'string'],
-            [['Nome', 'RG', 'Cidade', 'CPF', 'Senha'], 'string', 'max' => 45],
+            [['Idade', 'Historico_medico_idHistorico_medico', 'Usuario_idUsuario'], 'integer'],
+            [['Sexo'], 'string'],
+            [['Nome', 'RG', 'Cidade', 'CPF'], 'string', 'max' => 45],
             [['Historico_medico_idHistorico_medico'], 'exist', 'skipOnError' => true, 'targetClass' => HistoricoMedico::className(), 'targetAttribute' => ['Historico_medico_idHistorico_medico' => 'idHistorico_medico']],
+            [['Usuario_idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['Usuario_idUsuario' => 'idUsuario']],
         ];
     }
 
@@ -53,17 +54,16 @@ class Paciente extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idPaciente' => Yii::t('app', 'Id Paciente'),
-            'Nome' => Yii::t('app', 'Nome'),
-            'DataNascimento' => Yii::t('app', 'Data Nascimento'),
-            'RG' => Yii::t('app', 'Rg'),
-            'Cidade' => Yii::t('app', 'Cidade'),
-            'Idade' => Yii::t('app', 'Idade'),
-            'Sexo' => Yii::t('app', 'Sexo'),
-            'Imagem' => Yii::t('app', 'Imagem'),
-            'CPF' => Yii::t('app', 'Cpf'),
-            'Senha' => Yii::t('app', 'Senha'),
-            'Historico_medico_idHistorico_medico' => Yii::t('app', 'Historico Medico Id Historico Medico'),
+            'idPaciente' => 'Id Paciente',
+            'Nome' => 'Nome',
+            'DataNascimento' => 'Data Nascimento',
+            'RG' => 'Rg',
+            'Cidade' => 'Cidade',
+            'Idade' => 'Idade',
+            'Sexo' => 'Sexo',
+            'CPF' => 'Cpf',
+            'Historico_medico_idHistorico_medico' => 'Historico Medico Id Historico Medico',
+            'Usuario_idUsuario' => 'Usuario Id Usuario',
         ];
     }
 
@@ -81,5 +81,17 @@ class Paciente extends \yii\db\ActiveRecord
     public function getHistoricoMedicoIdHistoricoMedico()
     {
         return $this->hasOne(HistoricoMedico::className(), ['idHistorico_medico' => 'Historico_medico_idHistorico_medico']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuarioIdUsuario()
+    {
+        return $this->hasOne(Usuario::className(), ['idUsuario' => 'Usuario_idUsuario']);
+    }
+
+    public static function listAll() {
+        return self::find()->orderBy('Nome ASC')->all();
     }
 }

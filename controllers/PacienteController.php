@@ -8,6 +8,15 @@ use app\models\PacienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl; 
+use app\models\Medico;
+use yii\helpers\ArrayHelper;
+use app\models\Consulta;
+use yii\helpers\Json;
+use app\models\Procedimentos;
+
+
+
 
 /**
  * PacienteController implements the CRUD actions for Paciente model.
@@ -25,6 +34,57 @@ class PacienteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                //'only' => ['login', 'logout', 'signup'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['paciente-index'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['paciente-view'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['paciente-create'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['paciente-update'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['paciente-delete'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['marcar'],
+                        'roles' => ['paciente-marcar'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['prontuario'],
+                        'roles' => ['paciente-prontuario'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['agendapac'],
+                        'roles' => ['paciente-agendapac'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['procedimento'],
+                        'roles' => ['paciente-procedimento'],
+                    ],
                 ],
             ],
         ];
@@ -108,6 +168,44 @@ class PacienteController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+    public function actionMarcar() {  //para aparecer a view no navegador acessa http://localhost/TCC/web/?r=atendente/marcar
+        $consulta = new Consulta();
+        $medicos = ArrayHelper::map(Medico::listAll(),'idMedico','Nome_Medico');
+        $pacientes = ArrayHelper::map(Paciente::listAll(),'idPaciente','Nome');
+        if ($consulta->load(Yii::$app->request->post()) && $consulta->save()) {
+            //redireciona
+        }
+        return $this->render('marcar',['consulta'=>$consulta,'pacientes'=>$pacientes,'medicos'=>$medicos]);
+
+        
+    }
+    public function actionBuscar($data){
+        $consutas=Consulta::listaConsultasDia($data);
+        echo Json::encode($consutas); //transformando o array em um arquivo Json
+    }
+    public function actionProntuario(){  
+        return $this->render('prontuario');
+    }
+    public function actionAgendapac(){ 
+        return $this->render('agendapac');
+    }
+    public function actionProcedimento(){ 
+        $consulta = new Consulta();
+        $procedimento = ArrayHelper::map(Procedimentos::listAll(),'idProcedimentos','Nome_procedimento');
+        $pacientes = ArrayHelper::map(Paciente::listAll(),'idPaciente','Nome');
+
+        if ($consulta->load(Yii::$app->request->post())) {
+            //redirecionar para alguma tela
+            var_dump($consulta);
+
+
+        }
+
+     
+        return $this->render('procedimento',['consulta'=>$consulta,'pacientes'=>$pacientes,'procedimento'=>$procedimento]);
+       
+    
     }
 
     /**

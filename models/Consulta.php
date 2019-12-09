@@ -24,6 +24,7 @@ use Yii;
  */
 class Consulta extends \yii\db\ActiveRecord
 {
+    public $procedimentos;
     /**
      * {@inheritdoc}
      */
@@ -38,16 +39,29 @@ class Consulta extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Paciente_idPaciente', 'Medico_idMedico', 'Data_Consulta', 'Hora_Consulta', 'Diagnostico', 'Tipo_Consulta'], 'required'],
+            [['Paciente_idPaciente', 'Medico_idMedico', 'Data_Consulta','Hora_Consulta'], 'required'],
             [['Paciente_idPaciente', 'Medico_idMedico'], 'integer'],
             [['Data_Consulta', 'Hora_Consulta'], 'safe'],
             [['Diagnostico'], 'string'],
             [['Tipo_Consulta'], 'string', 'max' => 45],
             [['Atestado'], 'string', 'max' => 200],
+            [['procedimentos'],'safe'],
             [['Medico_idMedico'], 'exist', 'skipOnError' => true, 'targetClass' => Medico::className(), 'targetAttribute' => ['Medico_idMedico' => 'idMedico']],
             [['Paciente_idPaciente'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['Paciente_idPaciente' => 'idPaciente']],
         ];
     }
+
+    /*public function afterSave($insert, $changedAttributes) {
+        if (is_array($this->procedimentos)) {
+            foreach ($this->procedimentos as $idProcedimento) {
+                $exame = new Exame();
+                $exame->Consulta_idConsulta = $this->idConsulta;
+                $exame->Procedimentos_idProcedimentos = $idProcedimento;
+
+                $exame->save();
+            }
+        }
+    }*/
 
     /**
      * {@inheritdoc}
@@ -105,6 +119,7 @@ class Consulta extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Receita::className(), ['Consulta_idConsulta' => 'idConsulta']);
     }
+    //aqui esta fazendo a busca no banco de dados, a busca é chamada em AtendenteController.php
     public function listaConsultasDia($data){ 
         return $query=(new \yii\db\Query())->select(['Consulta.Hora_Consulta','Paciente.Nome', 'Medico.Especialidade','Nome_Medico'])->from('Consulta')->where("Data_Consulta = '$data'")->join('INNER JOIN','Paciente','idPaciente = Paciente_idPaciente')->join('INNER JOIN','Medico','idMedico = Medico_idMedico')->orderBy(['Hora_Consulta'=>SORT_ASC])->all();
     }

@@ -17,8 +17,8 @@ use yii\base\BaseObject;
  */
 class Item extends BaseObject
 {
-    const TYPE_ROLE = 1;
-    const TYPE_PERMISSION = 2;
+     const TYPE_ROLE = 1;
+     const TYPE_PERMISSION = 2;
 
     /**
      * @var int the type of the item. This should be either [[TYPE_ROLE]] or [[TYPE_PERMISSION]].
@@ -35,7 +35,7 @@ class Item extends BaseObject
     /**
      * @var string name of the rule associated with this item
      */
-    public $ruleName;
+     public $ruleName;
     /**
      * @var mixed the additional data associated with this item
      */

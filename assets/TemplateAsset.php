@@ -29,7 +29,7 @@ class TemplateAsset extends AssetBundle
         'assets/src/css/vanilla-calendar-min.css'
     ];
     public $js = [
-        'assets/js/core/jquery.min.js',
+        //'assets/js/core/jquery.min.js',
         'assets/js/core/popper.min.js',
         'assets/js/core/bootstrap-material-design.min.js',
         'assets/js/plugins/perfect-scrollbar.jquery.min.js',
@@ -52,7 +52,7 @@ class TemplateAsset extends AssetBundle
         'assets/js/material-dashboard.js?v=2.1.1',
         'assets/demo/demo.js',
         'assets/src/js/vanilla-calendar-min.js',
-        'assets/js/manipulacao_calendario.js'
+        //'assets/js/manipulacao_calendario.js'
 
     ];
     public $depends = [

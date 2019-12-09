@@ -9,15 +9,16 @@ use Yii;
  *
  * @property int $idMedico
  * @property string $CRM
- * @property string $Nome
+ * @property string $Nome_Medico
  * @property string $Especialidade
  * @property string $Telefone
  * @property resource $Imagem
  * @property string $CPF
- * @property string $Senha
+ * @property int $Usuario_idUsuario
  *
  * @property Agenda[] $agendas
  * @property Consulta[] $consultas
+ * @property Usuario $usuarioIdUsuario
  */
 class Medico extends \yii\db\ActiveRecord
 {
@@ -35,10 +36,12 @@ class Medico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CRM', 'Nome', 'Especialidade', 'Telefone', 'CPF', 'Senha'], 'required'],
+            [['CRM', 'Nome_Medico', 'Especialidade', 'Telefone', 'CPF', 'Usuario_idUsuario'], 'required'],
             [['Imagem'], 'string'],
-            [['CRM', 'Nome', 'Especialidade', 'Telefone', 'CPF', 'Senha'], 'string', 'max' => 45],
+            [['Usuario_idUsuario'], 'integer'],
+            [['CRM', 'Nome_Medico', 'Especialidade', 'Telefone', 'CPF'], 'string', 'max' => 45],
             [['CRM'], 'unique'],
+            [['Usuario_idUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['Usuario_idUsuario' => 'idUsuario']],
         ];
     }
 
@@ -48,14 +51,14 @@ class Medico extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idMedico' => Yii::t('app', 'Id Medico'),
-            'CRM' => Yii::t('app', 'Crm'),
-            'Nome' => Yii::t('app', 'Nome'),
-            'Especialidade' => Yii::t('app', 'Especialidade'),
-            'Telefone' => Yii::t('app', 'Telefone'),
-            'Imagem' => Yii::t('app', 'Imagem'),
-            'CPF' => Yii::t('app', 'Cpf'),
-            'Senha' => Yii::t('app', 'Senha'),
+            'idMedico' => 'Id Medico',
+            'CRM' => 'Crm',
+            'Nome_Medico' => 'Nome Medico',
+            'Especialidade' => 'Especialidade',
+            'Telefone' => 'Telefone',
+            'Imagem' => 'Imagem',
+            'CPF' => 'Cpf',
+            'Usuario_idUsuario' => 'Usuario Id Usuario',
         ];
     }
 
@@ -73,5 +76,16 @@ class Medico extends \yii\db\ActiveRecord
     public function getConsultas()
     {
         return $this->hasMany(Consulta::className(), ['Medico_idMedico' => 'idMedico']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuarioIdUsuario()
+    {
+        return $this->hasOne(Usuario::className(), ['idUsuario' => 'Usuario_idUsuario']);
+    }
+    public static function listAll() {
+        return self::find()->orderBy('Nome_Medico ASC')->all();
     }
 }

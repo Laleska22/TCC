@@ -8,6 +8,14 @@ use app\models\MedicoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Consulta; 
+use app\models\Paciente;
+use app\models\Procedimentos;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl; 
+use yii\helpers\Json;
+
+
 
 /**
  * MedicoController implements the CRUD actions for Medico model.
@@ -27,9 +35,66 @@ class MedicoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                //'only' => ['login', 'logout', 'signup'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['medico-index'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['medico-view'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['medico-create'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['medico-update'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['medico-delete'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['agendamed'],
+                        'roles' => ['medico-agendamed'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['telamedico'],
+                        'roles' => ['medico-telamedico'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['prontuario'],
+                        'roles' => ['medico-prontuario'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['enviarprocedimento'],
+                        'roles' => ['medico-enviarprocedimento'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['buscar'],
+                        'roles' => ['medico-buscar'],
+                    ],
+                ],
+            ],
         ];
     }
-
+    
+    //Permissao de paciente
     /**
      * Lists all Medico models.
      * @return mixed
@@ -124,5 +189,37 @@ class MedicoController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function actionTelamedico(){   //http://localhost/TCC/web/?r=medico/telamedico
+        return $this->render('telaMedico');
+    }
+    public function actionBuscar($data){
+        $consutas=Consulta::listaConsultasDia($data);
+        echo Json::encode($consutas); //transformando o array em um arquivo Json
+    }
+    public function actionAgendamed(){  //http://localhost/TCC/web/?r=medico/agendamed
+        return $this->render('agendamed');
+    }
+    public function actionProntuario() {  //http://localhost/TCC/web/?r=medico/buscarprontuario
+        $consulta = new Consulta();
+        $pacientes = ArrayHelper::map(Paciente::listAll(),'idPaciente','Nome');
+        return $this->render('prontuario',['consulta'=>$consulta,'pacientes'=>$pacientes]);
+    }
+    public function actionEnviarprocedimento(){
+        $consulta = new Consulta();
+        $procedimento = ArrayHelper::map(Procedimentos::listAll(),'idProcedimentos','Nome_procedimento');
+        $pacientes = ArrayHelper::map(Paciente::listAll(),'idPaciente','Nome');
+
+        if ($consulta->load(Yii::$app->request->post())) {
+            //redirecionar para alguma tela
+            var_dump($consulta);
+
+
+        }
+
+     
+        return $this->render('enviarprocedimento',['consulta'=>$consulta,'pacientes'=>$pacientes,'procedimento'=>$procedimento]);
+       
+    
     }
 }

@@ -20,8 +20,13 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        // authManager é um gerenciadore de autorização, adicionei isso para autorização
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
+        //
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Usuario',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [

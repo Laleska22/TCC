@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'DataNascimento')->textInput() ?>
+    <?= $form->field($model, 'DataNascimento')->input('date') ?>
 
     <?= $form->field($model, 'RG')->textInput(['maxlength' => true]) ?>
 
@@ -24,11 +24,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Sexo')->dropDownList([ 'M' => 'Masculino', 'F' => 'Feminino', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'Imagem')->fileInput() ?>
 
     <?= $form->field($model, 'CPF')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Senha')->passwordInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Historico_medico_idHistorico_medico')->textInput() ?>
 
@@ -38,8 +36,8 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-    <form action="">
+    <!-- <form action="">
         <input type="date">
-    </form>
+    </form> -->
 
 </div>

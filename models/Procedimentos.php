@@ -60,4 +60,7 @@ class Procedimentos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Consulta::className(), ['idConsulta' => 'Consulta_idConsulta'])->viaTable('Exame', ['Procedimentos_idProcedimentos' => 'idProcedimentos']);
     }
+    public static function listAll() {
+        return self::find()->orderBy('Nome_procedimento ASC')->all();
+    }
 }
