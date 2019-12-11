@@ -29,7 +29,7 @@ TemplateAsset::register($this);
 
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
-     
+
     <div class="logo">
         <a href="#" class="simple-text logo-normal"> <!-- implementar para aparecer o nome de quem ta logado-->
         <img class="mb-4" src="img/estetoscópio.png" alt="" width="72" height="72">
@@ -38,26 +38,14 @@ TemplateAsset::register($this);
       <div class="sidebar-wrapper">
         <ul class="nav">
 <!-- ATENDENTE MENU -->
-<?php
-if (Yii::$app->user->can('atendente-create')) {
 
-?>
-          <li class="nav-item active ">
-            <a class="nav-link" href="<?=Url::toRoute('atendente/create')?>">
-              <i class="material-icons">dashboard</i>
-              <p>Criar Atendente</p>
-            </a>
-          </li>
-<?php
-}
-?>
 <!--  -->
 <?php
-if (Yii::$app->user->can('paciente-create')) {
+if (Yii::$app->user->can('paciente-create') && Yii::$app->user->can('medico-create')) {
 
 ?>
           <li class="nav-item active ">
-            <a class="nav-link" href="<?=Url::toRoute('paciente/create')?>">
+            <a class="nav-link" href="<?=Url::toRoute('usuario/create')?>">
               <i class="material-icons">dashboard</i>
               <p>Criar Paciente</p>
             </a>
@@ -67,17 +55,7 @@ if (Yii::$app->user->can('paciente-create')) {
 ?>
 <!--  -->
 <?php
-if (Yii::$app->user->can('medico-create')) {
 
-?>
-          <li class="nav-item active ">
-            <a class="nav-link" href="<?=Url::toRoute('medico/create')?>">
-              <i class="material-icons">dashboard</i>
-              <p>Criar Médico</p>
-            </a>
-          </li>
-<?php
-}
 ?>
 <!--  -->
 
@@ -239,17 +217,18 @@ if (Yii::$app->user->can('paciente-procedimento')) {
 
 <!--  -->
 
-
+<?php if(!Yii::$app->user->isGuest) {  ?>
           <li class="nav-item ">
             <a class="nav-link" href="<?=Url::toRoute('site/logout')?>">
               <i class="material-icons">exit_to_app</i>
               <p>Sair</p>
             </a>
           </li>
+        <?php } ?>
          </div>
     </div>
     <div class="main-panel">
-     
+
       <div class="mx-3 main">
             <?= $content ?>
       </div>
@@ -292,7 +271,7 @@ if (Yii::$app->user->can('paciente-procedimento')) {
       </footer>
     </div>
   </div>
-  
+
 <?php $this->endBody() ?>
 </body>
 </html>

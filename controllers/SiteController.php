@@ -81,7 +81,7 @@ class SiteController extends Controller
         //$auth->removeAllRules();
         //$auth->removeAllRoles();
 
-        
+
 
         $admin = $auth->createRole('administrador');
         $atendente = $auth->createRole('atendente');
@@ -162,9 +162,9 @@ class SiteController extends Controller
         $auth->add($indexAtendente);
         $auth->add($inicioAtendente);
         $auth->add($viewAtendente);
-        $auth->add($addAtendente);
-        $auth->add($updateAtendente);
-        $auth->add($deleteAtendente);
+        //$auth->add($addAtendente);
+        //$auth->add($updateAtendente);
+        //$auth->add($deleteAtendente);
         $auth->add($buscarAtendente);
         $auth->add($marcarAtendente);
         $auth->add($prontuarioAtendente);
@@ -229,31 +229,31 @@ class SiteController extends Controller
         $auth->addChild($atendente, $indexAtendente);
         $auth->addChild($atendente, $inicioAtendente);
         $auth->addChild($atendente, $viewAtendente);
-        $auth->addChild($atendente, $addAtendente);
-        $auth->addChild($atendente, $updateAtendente);
-        $auth->addChild($atendente, $deleteAtendente);  //
+        //$auth->addChild($atendente, $addAtendente);
+        //$auth->addChild($atendente, $updateAtendente);
+        //$auth->addChild($atendente, $deleteAtendente);  //
         $auth->addChild($atendente, $agendaAtendente);  //
         $auth->addChild($atendente, $marcarAtendente);
         $auth->addChild($atendente, $prontuarioAtendente);
         $auth->addChild($atendente, $buscarAtendente);
-        
+
         $auth->addChild($atendente, $indexConsulta);
         $auth->addChild($atendente, $updateConsulta);
         $auth->addChild($atendente, $deleteConsulta);
         $auth->addChild($atendente, $viewConsulta);
         $auth->addChild($atendente, $addConsulta);
-        
+
         $auth->addChild($atendente, $indexPaciente);
         $auth->addChild($atendente, $viewPaciente);
         $auth->addChild($atendente, $addPaciente);
         $auth->addChild($atendente, $updatePaciente);
         $auth->addChild($atendente, $deletePaciente); ///
-        //paciente 
+        //paciente
         $auth->addChild($paciente, $indexPaciente);
         $auth->addChild($paciente, $viewPaciente);
         $auth->addChild($paciente, $addPaciente);
         $auth->addChild($paciente, $updatePaciente);
-        $auth->addChild($paciente, $deletePaciente); 
+        $auth->addChild($paciente, $deletePaciente);
         $auth->addChild($paciente, $marcarPaciente);
         $auth->addChild($paciente, $prontuarioPaciente);
         $auth->addChild($paciente, $agendapacPaciente);
@@ -274,7 +274,7 @@ class SiteController extends Controller
         $auth->addChild($medico, $viewMedico);
         $auth->addChild($medico, $addMedico);
         $auth->addChild($medico, $updateMedico);
-        $auth->addChild($medico, $deleteMedico); 
+        $auth->addChild($medico, $deleteMedico);
         $auth->addChild($medico,$agendamedMedico);
         $auth->addChild($medico,$enviarprocedimentoMedico);
         $auth->addChild($medico, $prontuarioMedico);
@@ -295,7 +295,7 @@ class SiteController extends Controller
         $auth->addChild($admin, $addMedico);
         $auth->addChild($admin, $addPaciente);
         $auth->addChild($admin, $addAtendente);
-        
+
         $auth->addChild($admin, $deleteMedico);
         $auth->addChild($admin, $deletePaciente);
         $auth->addChild($admin, $deleteAtendente);
@@ -312,7 +312,7 @@ class SiteController extends Controller
         $auth->addChild($admin, $updatePaciente);
         $auth->addChild($admin, $updateAtendente);
         $auth->addChild($admin, $atendente); //aqui o adm tem o poder de acessar todas as telas do atendente
-        
+
 
 
 
@@ -330,6 +330,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+     $this->layout='login';
         if (!Yii::$app->user->isGuest) {
             // return $this->goHome();
             return $this->redirect(["site/index"]);
@@ -353,10 +354,10 @@ class SiteController extends Controller
           } else {
               return $this->redirect(["medico/index"]);
           }
-          
-            
+
+
         }
-    
+
 
         $model->password = '';
         return $this->render('login', [
@@ -404,5 +405,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    
+
 }
